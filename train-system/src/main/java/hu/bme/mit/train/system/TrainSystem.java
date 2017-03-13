@@ -1,5 +1,8 @@
 package hu.bme.mit.train.system;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import hu.bme.mit.train.controller.TrainControllerImpl;
 import hu.bme.mit.train.interfaces.TrainController;
 import hu.bme.mit.train.interfaces.TrainSensor;
@@ -24,5 +27,22 @@ public class TrainSystem {
 	public TrainUser getUser() {
 		return user;
 	}
+	
+	public void runTrain(){
+		TimerTask task = new ChangeSpeedTask();
+		Timer timer = new Timer();
+		timer.schedule(task, 1000,60000);
+	}
+
+	public class ChangeSpeedTask extends TimerTask{
+		@Override
+		public void run() {
+			controller.followSpeed();
+		}
+	}
+	
+    /*public static void main(String[] args){
+    	runTrain();
+    }*/
 
 }
